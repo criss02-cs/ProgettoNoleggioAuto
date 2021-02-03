@@ -9,15 +9,15 @@ import java.sql.Statement;
 public class ProgettoNoleggioAuto {
 
     public static void main(String[] args) {
+        //Creazione del database
         creaDatabase();
+        //Creazione delle tabelle del database
         creaTabellaCategoria();
         creaTabellaSede();
         creaTabellaCliente();
         creaTabellaAuto();
         creaTabellaNoleggio();
-        /*
-        Frame
-        */
+        //Creazione della frame e visualizzazione di essa
         FrameMenu fm = new FrameMenu();
         fm.setVisible(true);
         fm.setTitle("Menù Gestionale noleggi auto");
@@ -118,9 +118,9 @@ public class ProgettoNoleggioAuto {
             stmt = c.createStatement();
             String creaCategoria = "CREATE TABLE IF NOT EXISTS auto (" + "\n"
                     + " targa varchar(7) primary key," + "\n"
+                    + " marca varchar(50) NOT NULL," + "\n"
                     + " modello varchar(50) NOT NULL," + "\n"
-                    + " cognome int NOT NULL," + "\n"
-                    + " fk_id_categoria int NOT NULL," + "\n"
+                    + " fk_id_categoria int," + "\n"
                     + " foreign key (fk_id_categoria) references categorie(id_categoria)"
                     + " );";
             stmt.executeUpdate(creaCategoria);
