@@ -9,6 +9,7 @@ public class FrameMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         btnAuto = new javax.swing.JButton();
+        btnSedi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -19,13 +20,22 @@ public class FrameMenu extends javax.swing.JFrame {
             }
         });
 
+        btnSedi.setText("Sedi");
+        btnSedi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSediActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAuto)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAuto)
+                    .addComponent(btnSedi))
                 .addContainerGap(338, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -33,7 +43,9 @@ public class FrameMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAuto)
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addComponent(btnSedi)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         pack();
@@ -47,7 +59,14 @@ public class FrameMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAutoActionPerformed
 
+    private void btnSediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSediActionPerformed
+        FrameSede fs = new FrameSede();
+        fs.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSediActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAuto;
+    private javax.swing.JButton btnSedi;
     // End of variables declaration//GEN-END:variables
 }

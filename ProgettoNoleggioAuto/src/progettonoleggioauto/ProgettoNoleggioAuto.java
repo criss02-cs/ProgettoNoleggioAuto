@@ -45,7 +45,7 @@ public class ProgettoNoleggioAuto {
             //System.out.println("Apertura del database avvenuta con successo");
             stmt = c.createStatement();
             String creaCategoria = "CREATE TABLE IF NOT EXISTS categorie (" + "\n"
-                    + " id_categoria int auto_increment primary key," + "\n"
+                    + " id_categoria integer primary key AUTOINCREMENT," + "\n"
                     + " descrizione varchar(50) NOT NULL," + "\n"
                     + " noleggioAlGiorno int NOT NULL," + "\n"
                     + " noleggioAlChilometro int NOT NULL" + "\n"
@@ -69,7 +69,7 @@ public class ProgettoNoleggioAuto {
             //System.out.println("Apertura del database avvenuta con successo");
             stmt = c.createStatement();
             String creaCategoria = "CREATE TABLE IF NOT EXISTS sedi (" + "\n"
-                    + " id_sede int auto_increment primary key," + "\n"
+                    + " id_sede integer primary key AUTOINCREMENT," + "\n"
                     + " indirizzo varchar(50) NOT NULL" + "\n"
                     + " );";
             stmt.executeUpdate(creaCategoria);
@@ -91,7 +91,7 @@ public class ProgettoNoleggioAuto {
             //System.out.println("Apertura del database avvenuta con successo");
             stmt = c.createStatement();
             String creaCategoria = "CREATE TABLE IF NOT EXISTS clienti (" + "\n"
-                    + " id_clienti int auto_increment primary key," + "\n"
+                    + " id_clienti integer primary key AUTOINCREMENT," + "\n"
                     + " nome varchar(50) NOT NULL," + "\n"
                     + " cognome int NOT NULL," + "\n"
                     + " noleggioAlChilometro int NOT NULL," + "\n"
@@ -142,7 +142,7 @@ public class ProgettoNoleggioAuto {
             //System.out.println("Apertura del database avvenuta con successo");
             stmt = c.createStatement();
             String creaCategoria = "CREATE TABLE IF NOT EXISTS noleggi (" + "\n"
-                    + " id_noleggio int auto_increment primary key," + "\n"
+                    + " id_noleggio integer primary key AUTOINCREMENT," + "\n"
                     + " kmIniziali int NOT NULL," + "\n"
                     + " kmFinali int," + "\n"
                     + " giornoRiconsegna date," + "\n"
