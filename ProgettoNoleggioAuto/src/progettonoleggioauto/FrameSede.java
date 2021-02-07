@@ -1,14 +1,16 @@
 package progettonoleggioauto;
+
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 
 public class FrameSede extends javax.swing.JFrame {
+
     public FrameSede() {
         initComponents();
         this.setTitle("Gestione sedi");
     }
-    
-    private void caricaJTable(){
+
+    private void caricaJTable() {
         DefaultTableModel tbl = (DefaultTableModel) tblSedi.getModel();
         tbl.setRowCount(0);
         Connection c = null;
@@ -33,6 +35,7 @@ public class FrameSede extends javax.swing.JFrame {
             System.out.println("Problemi durante la select, " + e.getMessage());
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -46,6 +49,7 @@ public class FrameSede extends javax.swing.JFrame {
         txtIndirizzo = new javax.swing.JTextField();
         lblTarga = new javax.swing.JLabel();
         btnInserisci = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,6 +120,13 @@ public class FrameSede extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("Torna indietro");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -127,8 +138,13 @@ public class FrameSede extends javax.swing.JFrame {
                 .addComponent(txtIndirizzo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(119, 119, 119))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(btnInserisci)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(btnInserisci))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -140,7 +156,9 @@ public class FrameSede extends javax.swing.JFrame {
                     .addComponent(lblTarga))
                 .addGap(32, 32, 32)
                 .addComponent(btnInserisci)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Inserisci sede", jPanel2);
@@ -160,7 +178,7 @@ public class FrameSede extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void btnInserisciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserisciActionPerformed
         String indirizzo = txtIndirizzo.getText();
         Connection c = null;
@@ -187,7 +205,14 @@ public class FrameSede extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnIndietroActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        FrameMenu fm = new FrameMenu();
+        fm.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnIndietro;
     private javax.swing.JButton btnInserisci;
     private javax.swing.JPanel jPanel1;

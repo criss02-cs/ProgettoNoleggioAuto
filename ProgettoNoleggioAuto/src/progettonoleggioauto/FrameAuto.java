@@ -1,5 +1,6 @@
 package progettonoleggioauto;
 import java.sql.*;
+import java.util.StringTokenizer;
 import javax.swing.table.DefaultTableModel;
 
 public class FrameAuto extends javax.swing.JFrame {
@@ -7,23 +8,42 @@ public class FrameAuto extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Gestione auto");
     }
+    private void caricaComboBox(){
+        Connection c = null;
+        ResultSet rec;
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT id_categoria, descrizione FROM categorie";
+            PreparedStatement ps = c.prepareStatement(select);
+            rec = ps.executeQuery();
+            while(rec.next()){
+                cmbCategorie.addItem(rec.getInt(1) + "-" + rec.getString(2));
+            }
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (Exception e) {
+            System.out.println("Problemi durante la select, " + e.getMessage());
+        }
+    }
     private void caricaJTable(){
-        DefaultTableModel tbl = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel tbl = (DefaultTableModel) tblAuto.getModel();
         tbl.setRowCount(0);
         Connection c = null;
         ResultSet rec;
         try {
             c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String select = "SELECT * FROM auto";
+            String select = "SELECT targa, marca, modello, id_categoria, descrizione "
+                    + "FROM auto inner join categorie on fk_id_categoria = id_categoria";
             PreparedStatement ps = c.prepareStatement(select);
             rec = ps.executeQuery();
-            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+            DefaultTableModel dtm = (DefaultTableModel) tblAuto.getModel();
             Object riga[] = new Object[dtm.getColumnCount()];
-            int i = 0;
             while (rec.next()) {
                 riga[0] = rec.getString(1);
                 riga[1] = rec.getString(2);
                 riga[2] = rec.getString(3);
+                riga[3] = rec.getInt(4) + "-" + rec.getString(5);
                 dtm.addRow(riga);
             }
             rec.close();
@@ -40,7 +60,7 @@ public class FrameAuto extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblAuto = new javax.swing.JTable();
         btnIndietro = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtTarga = new javax.swing.JTextField();
@@ -50,8 +70,9 @@ public class FrameAuto extends javax.swing.JFrame {
         lblModello = new javax.swing.JLabel();
         txtModello = new javax.swing.JTextField();
         lblModello1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbCategorie = new javax.swing.JComboBox<>();
         btnInserisci = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,7 +82,7 @@ public class FrameAuto extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAuto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -84,7 +105,7 @@ public class FrameAuto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblAuto);
 
         btnIndietro.setText("Torna indietro");
         btnIndietro.addActionListener(new java.awt.event.ActionListener() {
@@ -120,12 +141,19 @@ public class FrameAuto extends javax.swing.JFrame {
 
         lblModello1.setText("Categoria");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cmbCategorie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
         btnInserisci.setText("Inserisci");
         btnInserisci.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInserisciActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("Torna indietro");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -151,11 +179,16 @@ public class FrameAuto extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblModello1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(117, 117, 117))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(btnInserisci)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(btnInserisci))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -176,10 +209,12 @@ public class FrameAuto extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblModello1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbCategorie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnInserisci)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Inserisci auto", jPanel2);
@@ -203,17 +238,17 @@ public class FrameAuto extends javax.swing.JFrame {
         String targa = txtTarga.getText();
         String marca = txtMarca.getText();
         String modello = txtModello.getText();
-        Integer categoria = null;
+        StringTokenizer st = new StringTokenizer(cmbCategorie.getSelectedItem().toString(), "-");
+        Integer categoria = Integer.parseInt(st.nextToken());
         Connection c = null;
         try {
             c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String insert = "INSERT INTO auto (targa, marca, modello) values (?,?,?)";
+            String insert = "INSERT INTO auto (targa, marca, modello, fk_id_categoria) values (?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(insert);
-            System.out.println("Riga 153");
             ps.setString(1, targa);
             ps.setString(2, marca);
             ps.setString(3, modello);
-            //ps.setInt(4, categoria);
+            ps.setInt(4, categoria);
             ps.executeUpdate();
             ps.close();
             c.close();
@@ -224,6 +259,7 @@ public class FrameAuto extends javax.swing.JFrame {
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         caricaJTable();
+        caricaComboBox();
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void btnIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIndietroActionPerformed
@@ -232,19 +268,26 @@ public class FrameAuto extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnIndietroActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        FrameMenu fm = new FrameMenu();
+        fm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnIndietro;
     private javax.swing.JButton btnInserisci;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbCategorie;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblModello;
     private javax.swing.JLabel lblModello1;
     private javax.swing.JLabel lblTarga;
     private javax.swing.JLabel lblTarga1;
+    private javax.swing.JTable tblAuto;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModello;
     private javax.swing.JTextField txtTarga;

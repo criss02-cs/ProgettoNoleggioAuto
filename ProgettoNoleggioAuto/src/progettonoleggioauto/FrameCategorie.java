@@ -52,6 +52,7 @@ public class FrameCategorie extends javax.swing.JFrame {
         txtDescrizione = new javax.swing.JTextField();
         txtNoleggioAlGiorno = new javax.swing.JTextField();
         txtNoleggioAlKm = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +113,13 @@ public class FrameCategorie extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("Torna indietro");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -131,7 +139,10 @@ public class FrameCategorie extends javax.swing.JFrame {
                             .addComponent(txtNoleggioAlGiorno, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(148, 148, 148)
-                        .addComponent(btnInserisci)))
+                        .addComponent(btnInserisci))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack)))
                 .addContainerGap(274, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -151,7 +162,9 @@ public class FrameCategorie extends javax.swing.JFrame {
                     .addComponent(txtNoleggioAlKm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addComponent(btnInserisci)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBack)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Inserisci", jPanel2);
@@ -201,7 +214,14 @@ public class FrameCategorie extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnIndietroActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        FrameMenu fm = new FrameMenu();
+        fm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnIndietro;
     private javax.swing.JButton btnInserisci;
     private javax.swing.JPanel jPanel1;
