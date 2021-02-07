@@ -3,6 +3,7 @@ package progettonoleggioauto;
 public class FrameMenu extends javax.swing.JFrame {
     public FrameMenu() {
         initComponents();
+        this.setTitle("Menù Gestionale noleggi auto");
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -10,6 +11,7 @@ public class FrameMenu extends javax.swing.JFrame {
 
         btnAuto = new javax.swing.JButton();
         btnSedi = new javax.swing.JButton();
+        btnCategoria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -27,6 +29,13 @@ public class FrameMenu extends javax.swing.JFrame {
             }
         });
 
+        btnCategoria.setText("Categoria");
+        btnCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -35,17 +44,20 @@ public class FrameMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAuto)
-                    .addComponent(btnSedi))
-                .addContainerGap(338, Short.MAX_VALUE))
+                    .addComponent(btnSedi)
+                    .addComponent(btnCategoria))
+                .addContainerGap(309, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAuto)
-                .addGap(63, 63, 63)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCategoria)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSedi)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
 
         pack();
@@ -65,8 +77,15 @@ public class FrameMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnSediActionPerformed
 
+    private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
+        FrameCategorie fc = new FrameCategorie();
+        fc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCategoriaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAuto;
+    private javax.swing.JButton btnCategoria;
     private javax.swing.JButton btnSedi;
     // End of variables declaration//GEN-END:variables
 }

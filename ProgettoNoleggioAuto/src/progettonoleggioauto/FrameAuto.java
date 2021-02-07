@@ -1,10 +1,37 @@
 package progettonoleggioauto;
 import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 public class FrameAuto extends javax.swing.JFrame {
     public FrameAuto() {
         initComponents();
         this.setTitle("Gestione auto");
+    }
+    private void caricaJTable(){
+        DefaultTableModel tbl = (DefaultTableModel) jTable1.getModel();
+        tbl.setRowCount(0);
+        Connection c = null;
+        ResultSet rec;
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM auto";
+            PreparedStatement ps = c.prepareStatement(select);
+            rec = ps.executeQuery();
+            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+            Object riga[] = new Object[dtm.getColumnCount()];
+            int i = 0;
+            while (rec.next()) {
+                riga[0] = rec.getString(1);
+                riga[1] = rec.getString(2);
+                riga[2] = rec.getString(3);
+                dtm.addRow(riga);
+            }
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (Exception e) {
+            System.out.println("Problemi durante la select, " + e.getMessage());
+        }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -14,6 +41,7 @@ public class FrameAuto extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnIndietro = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtTarga = new javax.swing.JTextField();
         lblTarga = new javax.swing.JLabel();
@@ -27,28 +55,59 @@ public class FrameAuto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Targa", "Marca", "Modello", "Categoria"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+
+        btnIndietro.setText("Torna indietro");
+        btnIndietro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIndietroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnIndietro)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnIndietro))
         );
 
         jTabbedPane1.addTab("Visualizza auto", jPanel1);
@@ -120,7 +179,7 @@ public class FrameAuto extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnInserisci)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Inserisci auto", jPanel2);
@@ -163,7 +222,18 @@ public class FrameAuto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnInserisciActionPerformed
 
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        caricaJTable();
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void btnIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIndietroActionPerformed
+        FrameMenu fm = new FrameMenu();
+        fm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnIndietroActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIndietro;
     private javax.swing.JButton btnInserisci;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;

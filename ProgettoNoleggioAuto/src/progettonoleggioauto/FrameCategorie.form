@@ -23,12 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -43,8 +43,8 @@
         <Container class="javax.swing.JPanel" name="jPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Visualizza auto">
-                <Property name="tabTitle" type="java.lang.String" value="Visualizza auto"/>
+              <JTabbedPaneConstraints tabName="Visualizza">
+                <Property name="tabTitle" type="java.lang.String" value="Visualizza"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -52,19 +52,21 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnIndietro" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="321" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="596" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="243" max="-2" attributes="0"/>
-                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="303" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnIndietro" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="11" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -77,14 +79,14 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="tblCategoria">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
-                        <Column editable="false" title="Targa" type="java.lang.String"/>
-                        <Column editable="false" title="Marca" type="java.lang.String"/>
-                        <Column editable="false" title="Modello" type="java.lang.String"/>
-                        <Column editable="false" title="Categoria" type="java.lang.Integer"/>
+                        <Column editable="true" title="ID_Categoria" type="java.lang.Object"/>
+                        <Column editable="true" title="Descrizione" type="java.lang.Object"/>
+                        <Column editable="true" title="Noleggio al giorno" type="java.lang.Object"/>
+                        <Column editable="true" title="Noleggio al km" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -104,8 +106,8 @@
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Inserisci auto">
-                <Property name="tabTitle" type="java.lang.String" value="Inserisci auto"/>
+              <JTabbedPaneConstraints tabName="Inserisci">
+                <Property name="tabTitle" type="java.lang.String" value="Inserisci"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -113,108 +115,71 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="127" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblTarga1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTarga" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNoleggioAlGiorno" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDescrizione" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNoleggioAlKm" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtMarca" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
-                                  <Component id="txtTarga" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
+                                  <Component id="txtNoleggioAlKm" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                                  <Component id="txtDescrizione" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                                  <Component id="txtNoleggioAlGiorno" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblModello" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txtModello" min="-2" pref="98" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblModello1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jComboBox1" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
+                              <Component id="btnInserisci" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
-                      <Component id="btnInserisci" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="274" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtTarga" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTarga" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblTarga1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtMarca" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDescrizione" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDescrizione" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblModello" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtModello" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNoleggioAlGiorno" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNoleggioAlGiorno" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblModello1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNoleggioAlKm" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNoleggioAlKm" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                       <Component id="btnInserisci" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="39" max="32767" attributes="0"/>
+                      <EmptySpace pref="123" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="txtTarga">
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblTarga">
+            <Component class="javax.swing.JLabel" name="lblDescrizione">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Targa"/>
+                <Property name="text" type="java.lang.String" value="Descrizione"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTarga1">
+            <Component class="javax.swing.JLabel" name="lblNoleggioAlGiorno">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Marca"/>
+                <Property name="text" type="java.lang.String" value="Noleggio al giorno"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtMarca">
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblModello">
+            <Component class="javax.swing.JLabel" name="lblNoleggioAlKm">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Modello"/>
+                <Property name="text" type="java.lang.String" value="Noleggio al km"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtModello">
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblModello1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Categoria"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox1">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
-                    <StringItem index="0" value=" "/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="btnInserisci">
               <Properties>
@@ -223,6 +188,12 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInserisciActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtDescrizione">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtNoleggioAlGiorno">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtNoleggioAlKm">
             </Component>
           </SubComponents>
         </Container>
