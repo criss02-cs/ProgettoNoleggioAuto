@@ -1,56 +1,38 @@
 package progettonoleggioauto;
-import java.sql.*;
+
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 import javax.swing.table.DefaultTableModel;
+import model.*;
 
 public class FrameAuto extends javax.swing.JFrame {
+    SqlCommand sql;
     public FrameAuto() {
         initComponents();
         this.setTitle("Gestione auto");
     }
     private void caricaComboBox(){
-        Connection c = null;
-        ResultSet rec;
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String select = "SELECT id_categoria, descrizione FROM categorie";
-            PreparedStatement ps = c.prepareStatement(select);
-            rec = ps.executeQuery();
-            while(rec.next()){
-                cmbCategorie.addItem(rec.getInt(1) + "-" + rec.getString(2));
-            }
-            rec.close();
-            ps.close();
-            c.close();
-        } catch (Exception e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+        sql = new SqlCommand();
+        ArrayList<Categoria> categorie;
+        categorie = sql.selectCategorieComboBox();
+        for (Categoria categoria : categorie) {
+            cmbCategorie.addItem(categoria.getIdCategoria() + "-" + categoria.getDescrizione());
         }
     }
     private void caricaJTable(){
+        sql = new SqlCommand();
         DefaultTableModel tbl = (DefaultTableModel) tblAuto.getModel();
         tbl.setRowCount(0);
-        Connection c = null;
-        ResultSet rec;
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String select = "SELECT targa, marca, modello, id_categoria, descrizione "
-                    + "FROM auto inner join categorie on fk_id_categoria = id_categoria";
-            PreparedStatement ps = c.prepareStatement(select);
-            rec = ps.executeQuery();
-            DefaultTableModel dtm = (DefaultTableModel) tblAuto.getModel();
-            Object riga[] = new Object[dtm.getColumnCount()];
-            while (rec.next()) {
-                riga[0] = rec.getString(1);
-                riga[1] = rec.getString(2);
-                riga[2] = rec.getString(3);
-                riga[3] = rec.getInt(4) + "-" + rec.getString(5);
-                dtm.addRow(riga);
-            }
-            rec.close();
-            ps.close();
-            c.close();
-        } catch (Exception e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+        ArrayList<Auto> auto;
+        DefaultTableModel dtm = (DefaultTableModel) tblAuto.getModel();
+        Object riga[] = new Object[dtm.getColumnCount()];
+        auto = sql.selectAuto();
+        for (Auto object : auto) {
+            riga[0] = object.getTarga();
+            riga[1] = object.getMarca();
+            riga[2] = object.getModello();
+            riga[3] = object.getFkIdCategoria() + "-" + object.getNomeCategoria();
+            dtm.addRow(riga);
         }
     }
     @SuppressWarnings("unchecked")
@@ -240,21 +222,7 @@ public class FrameAuto extends javax.swing.JFrame {
         String modello = txtModello.getText();
         StringTokenizer st = new StringTokenizer(cmbCategorie.getSelectedItem().toString(), "-");
         Integer categoria = Integer.parseInt(st.nextToken());
-        Connection c = null;
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String insert = "INSERT INTO auto (targa, marca, modello, fk_id_categoria) values (?,?,?,?)";
-            PreparedStatement ps = c.prepareStatement(insert);
-            ps.setString(1, targa);
-            ps.setString(2, marca);
-            ps.setString(3, modello);
-            ps.setInt(4, categoria);
-            ps.executeUpdate();
-            ps.close();
-            c.close();
-        } catch (Exception e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        sql.inserisciAuto(targa, marca, modello, categoria);
     }//GEN-LAST:event_btnInserisciActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged

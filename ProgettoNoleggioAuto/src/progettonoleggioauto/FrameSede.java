@@ -1,38 +1,28 @@
 package progettonoleggioauto;
 
-import java.sql.*;
+import model.*;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class FrameSede extends javax.swing.JFrame {
-
+    private SqlCommand sql;
     public FrameSede() {
         initComponents();
         this.setTitle("Gestione sedi");
     }
 
     private void caricaJTable() {
+        sql = new SqlCommand();
         DefaultTableModel tbl = (DefaultTableModel) tblSedi.getModel();
         tbl.setRowCount(0);
-        Connection c = null;
-        ResultSet rec;
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String select = "SELECT * FROM sedi";
-            PreparedStatement ps = c.prepareStatement(select);
-            rec = ps.executeQuery();
-            DefaultTableModel dtm = (DefaultTableModel) tblSedi.getModel();
-            Object riga[] = new Object[dtm.getColumnCount()];
-            int i = 0;
-            while (rec.next()) {
-                riga[0] = rec.getInt(1);
-                riga[1] = rec.getString(2);
-                dtm.addRow(riga);
-            }
-            rec.close();
-            ps.close();
-            c.close();
-        } catch (Exception e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+        ArrayList<Sede> sedi;
+        DefaultTableModel dtm = (DefaultTableModel) tblSedi.getModel();
+        Object riga[] = new Object[dtm.getColumnCount()];
+        sedi = sql.selectSedi();
+        for (Sede sede : sedi) {
+            riga[0] = sede.getIdSede();
+            riga[1] = sede.getIndirizzo();
+            dtm.addRow(riga);
         }
     }
 
@@ -181,18 +171,8 @@ public class FrameSede extends javax.swing.JFrame {
 
     private void btnInserisciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserisciActionPerformed
         String indirizzo = txtIndirizzo.getText();
-        Connection c = null;
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String insert = "INSERT INTO sedi (indirizzo) values (?)";
-            PreparedStatement ps = c.prepareStatement(insert);
-            ps.setString(1, indirizzo);
-            ps.executeUpdate();
-            ps.close();
-            c.close();
-        } catch (Exception e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        sql = new SqlCommand();
+        sql.inserisciSede(indirizzo);
     }//GEN-LAST:event_btnInserisciActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
