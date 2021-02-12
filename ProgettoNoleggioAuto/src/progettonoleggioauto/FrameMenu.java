@@ -12,6 +12,7 @@ public class FrameMenu extends javax.swing.JFrame {
         btnAuto = new javax.swing.JButton();
         btnSedi = new javax.swing.JButton();
         btnCategoria = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -36,6 +37,13 @@ public class FrameMenu extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Clienti");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -45,7 +53,8 @@ public class FrameMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAuto)
                     .addComponent(btnSedi)
-                    .addComponent(btnCategoria))
+                    .addComponent(btnCategoria)
+                    .addComponent(jButton1))
                 .addContainerGap(309, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -57,7 +66,9 @@ public class FrameMenu extends javax.swing.JFrame {
                 .addComponent(btnCategoria)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSedi)
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         pack();
@@ -83,9 +94,16 @@ public class FrameMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCategoriaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FrameClienti fc = new FrameClienti();
+        fc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAuto;
     private javax.swing.JButton btnCategoria;
     private javax.swing.JButton btnSedi;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

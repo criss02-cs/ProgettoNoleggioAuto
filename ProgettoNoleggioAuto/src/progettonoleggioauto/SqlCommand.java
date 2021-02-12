@@ -98,4 +98,42 @@ public class SqlCommand {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
+    //Metodo per selezionare tutti i clienti
+    public ArrayList<Cliente> selectClienti(){
+        ArrayList<Cliente> clienti = null;
+        try {
+            clienti = new ArrayList<>();
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM clienti";
+            PreparedStatement ps = c.prepareStatement(select);
+            rec = ps.executeQuery();
+            while(rec.next()){
+                clienti.add(new Cliente(rec.getInt(1), rec.getString(2), rec.getString(3), rec.getInt(4), rec.getDate(5), rec.getInt(6)));
+            }
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Problemi durante la select, " + e.getMessage());
+        }
+        return clienti;
+    }
+    //Metodo per inserire un nuovo cliente
+    public void inserisciClienti(String nome, String cognome, Integer noleggio, Date dataNascita, Integer nPatente){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String insert = "INSERT INTO clienti (nome, cognome, noleggioAlChilometro, dataN, nPatente) values (?,?,?,?,?)";
+            PreparedStatement ps = c.prepareStatement(insert);
+            ps.setString(1, nome);
+            ps.setString(2, cognome);
+            ps.setInt(3, noleggio);
+            ps.setDate(4, dataNascita);
+            ps.setInt(5, nPatente);
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (Exception e) {
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
 }
