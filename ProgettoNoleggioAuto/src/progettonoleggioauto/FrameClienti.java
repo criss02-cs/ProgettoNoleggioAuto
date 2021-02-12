@@ -24,7 +24,7 @@ public class FrameClienti extends javax.swing.JFrame {
             riga[1] = object.getNome();
             riga[2] = object.getNome();
             riga[3] = object.getNoleggioAlKm();
-            riga[4] = new SimpleDateFormat("yyyy-MM-dd").format(object.getDataN());
+            riga[4] = new SimpleDateFormat("dd-MM-yyy").format(object.getDataN());
             riga[5] = object.getnPatente();
             dtm.addRow(riga);
         }
