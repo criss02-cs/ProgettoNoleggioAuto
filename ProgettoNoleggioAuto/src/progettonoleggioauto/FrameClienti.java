@@ -2,6 +2,7 @@ package progettonoleggioauto;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.*;
 
@@ -9,7 +10,7 @@ public class FrameClienti extends javax.swing.JFrame {
     SqlCommand sql;
     public FrameClienti() {
         initComponents();
-        this.setTitle("Gestione auto");
+        this.setTitle("Gestione clienti");
     }
     private void caricaJTable(){
         sql = new SqlCommand();
@@ -218,10 +219,12 @@ public class FrameClienti extends javax.swing.JFrame {
         String cognome = txtCognome.getText();
         Integer noleggio = Integer.parseInt(spnNoleggio.getValue().toString());
         String dataNascita = new SimpleDateFormat("yyyy-MM-dd").format(dcDataNascita.getDate());
+        //Date dataNascita = dcDataNascita.getDate();
         Integer nPatente = Integer.parseInt(txtNumeroPatente.getText());
         //Converto la data da stringa a oggetto sql.Date
         java.sql.Date dN = java.sql.Date.valueOf(dataNascita);
         sql.inserisciClienti(nome, cognome, noleggio, dN, nPatente);
+        JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
     }//GEN-LAST:event_btnInserisciActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged

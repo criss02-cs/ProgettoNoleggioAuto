@@ -1,40 +1,37 @@
 package progettonoleggioauto;
-import java.sql.*;
+
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.*;
 
 public class FrameCategorie extends javax.swing.JFrame {
+
+    private SqlCommand sql;
+
     public FrameCategorie() {
         initComponents();
         this.setTitle("Gestione Categorie");
     }
 
-    private void caricaJTable(){
+    private void caricaJTable() {
         DefaultTableModel tbl = (DefaultTableModel) tblCategoria.getModel();
         tbl.setRowCount(0);
-        Connection c = null;
-        ResultSet rec;
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String select = "SELECT * FROM categorie";
-            PreparedStatement ps = c.prepareStatement(select);
-            rec = ps.executeQuery();
-            DefaultTableModel dtm = (DefaultTableModel) tblCategoria.getModel();
-            Object riga[] = new Object[dtm.getColumnCount()];
-            int i = 0;
-            while (rec.next()) {
-                riga[0] = rec.getInt(1);
-                riga[1] = rec.getString(2);
-                riga[2] = rec.getInt(3);
-                riga[3] = rec.getInt(4);
-                dtm.addRow(riga);
-            }
-            rec.close();
-            ps.close();
-            c.close();
-        } catch (Exception e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+        sql = new SqlCommand();
+        ArrayList<Categoria> categorie;
+        DefaultTableModel dtm = (DefaultTableModel) tblCategoria.getModel();
+        Object riga[] = new Object[dtm.getColumnCount()];
+        int i = 0;
+        categorie = sql.selectCategorie();
+        for (Categoria categoria : categorie) {
+            riga[0] = categoria.getIdCategoria();
+            riga[1] = categoria.getDescrizione();
+            riga[2] = categoria.getNoleggioAlGiorno();
+            riga[3] = categoria.getNoleggioAlChilometro();
+            dtm.addRow(riga);
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -127,28 +124,30 @@ public class FrameCategorie extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNoleggioAlGiorno)
-                            .addComponent(lblDescrizione)
-                            .addComponent(lblNoleggioAlKm))
-                        .addGap(63, 63, 63)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNoleggioAlKm, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDescrizione, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNoleggioAlGiorno, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(btnInserisci))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnBack)))
-                .addContainerGap(274, Short.MAX_VALUE))
+                        .addComponent(btnBack))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(168, 168, 168)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNoleggioAlGiorno)
+                                    .addComponent(lblDescrizione)
+                                    .addComponent(lblNoleggioAlKm))
+                                .addGap(63, 63, 63)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNoleggioAlKm, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDescrizione, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNoleggioAlGiorno, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(84, 84, 84)
+                                .addComponent(btnInserisci)))))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescrizione)
                     .addComponent(txtDescrizione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -162,9 +161,9 @@ public class FrameCategorie extends javax.swing.JFrame {
                     .addComponent(txtNoleggioAlKm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addComponent(btnInserisci)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(59, 59, 59)
                 .addComponent(btnBack)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Inserisci", jPanel2);
@@ -188,20 +187,8 @@ public class FrameCategorie extends javax.swing.JFrame {
         String descrizione = txtDescrizione.getText();
         Integer noleggioAlGiorno = Integer.parseInt(txtNoleggioAlGiorno.getText());
         Integer noleggioAlKm = Integer.parseInt(txtNoleggioAlKm.getText());
-        Connection c = null;
-        try {
-            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String insert = "INSERT INTO categorie (descrizione, noleggioAlGiorno, noleggioAlChilometro) values (?,?,?)";
-            PreparedStatement ps = c.prepareStatement(insert);
-            ps.setString(1, descrizione);
-            ps.setInt(2, noleggioAlGiorno);
-            ps.setInt(3, noleggioAlKm);
-            ps.executeUpdate();
-            ps.close();
-            c.close();
-        } catch (Exception e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        sql.inserisciCategorie(descrizione, noleggioAlGiorno, noleggioAlKm);
+        JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
     }//GEN-LAST:event_btnInserisciActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged

@@ -3,6 +3,7 @@ package progettonoleggioauto;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 import model.*;
 
 public class FrameAuto extends javax.swing.JFrame {
@@ -223,6 +224,7 @@ public class FrameAuto extends javax.swing.JFrame {
         StringTokenizer st = new StringTokenizer(cmbCategorie.getSelectedItem().toString(), "-");
         Integer categoria = Integer.parseInt(st.nextToken());
         sql.inserisciAuto(targa, marca, modello, categoria);
+        JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
     }//GEN-LAST:event_btnInserisciActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged

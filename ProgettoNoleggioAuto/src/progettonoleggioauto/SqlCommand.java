@@ -5,7 +5,6 @@ import model.*;
 public class SqlCommand {
     Connection c = null;
     ResultSet rec;
-    
     //Metodo per selezionare tutte le sedi
     public ArrayList<Sede> selectSedi(){
         ArrayList<Sede> sedi = null;
@@ -59,6 +58,42 @@ public class SqlCommand {
             System.out.println("Problemi durante la select, " + e.getMessage());
         }
         return categorie;
+    }
+    //Metodo per l'estrazione delle categorie
+    public ArrayList<Categoria> selectCategorie(){
+        ArrayList<Categoria> categorie = null;
+        try {
+            categorie = new ArrayList<>();
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM categorie";
+            PreparedStatement ps = c.prepareStatement(select);
+            rec = ps.executeQuery();
+            while(rec.next()){
+                categorie.add(new Categoria(rec.getInt(1), rec.getString(2), rec.getInt(3), rec.getInt(4)));
+            }
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Problemi durante la select, " + e.getMessage());
+        }
+        return categorie;
+    }
+    //Metodo per l'inserimento delle categorie
+    public void inserisciCategorie(String descrizione, Integer noleggioAlGiorno, Integer noleggioAlKm){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String insert = "INSERT INTO categorie (descrizione, noleggioAlGiorno, noleggioAlChilometro) values (?,?,?)";
+            PreparedStatement ps = c.prepareStatement(insert);
+            ps.setString(1, descrizione);
+            ps.setInt(2, noleggioAlGiorno);
+            ps.setInt(3, noleggioAlKm);
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (Exception e) {
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+        }
     }
     //Metodo per l'estrazione delle auto
     public ArrayList<Auto> selectAuto(){

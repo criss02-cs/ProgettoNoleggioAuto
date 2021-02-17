@@ -2,6 +2,7 @@ package progettonoleggioauto;
 
 import model.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FrameSede extends javax.swing.JFrame {
@@ -173,6 +174,7 @@ public class FrameSede extends javax.swing.JFrame {
         String indirizzo = txtIndirizzo.getText();
         sql = new SqlCommand();
         sql.inserisciSede(indirizzo);
+        JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
     }//GEN-LAST:event_btnInserisciActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
