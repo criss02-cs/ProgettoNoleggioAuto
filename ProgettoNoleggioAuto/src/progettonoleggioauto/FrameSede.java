@@ -73,6 +73,11 @@ public class FrameSede extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblSedi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSediMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSedi);
 
         btnIndietro.setText("Torna indietro");
@@ -192,6 +197,14 @@ public class FrameSede extends javax.swing.JFrame {
         fm.setVisible(true);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void tblSediMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSediMouseClicked
+        int riga = tblSedi.getSelectedRow();
+        Integer id = Integer.parseInt(tblSedi.getValueAt(riga, 0).toString());
+        FrameDettaglioSedi fds = new FrameDettaglioSedi(id);
+        fds.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tblSediMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

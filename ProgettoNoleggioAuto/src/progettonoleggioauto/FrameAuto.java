@@ -14,6 +14,7 @@ public class FrameAuto extends javax.swing.JFrame {
     }
     private void caricaComboBox(){
         sql = new SqlCommand();
+        cmbCategorie.removeAllItems();
         ArrayList<Categoria> categorie;
         categorie = sql.selectCategorieComboBox();
         for (Categoria categoria : categorie) {

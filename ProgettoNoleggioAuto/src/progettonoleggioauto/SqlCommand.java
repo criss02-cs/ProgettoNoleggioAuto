@@ -5,6 +5,53 @@ import model.*;
 public class SqlCommand {
     Connection c = null;
     ResultSet rec;
+    //Metodo per cancellare una sede
+    public void cancellaSede(Integer id){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "DELETE FROM sedi WHERE id_sede = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Problemi durante la cancellazione, " + e.getMessage());
+        }
+    }
+    //Metodo per modificare una sede
+     public void modificaSede(Sede sede){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "UPDATE sedi SET indirizzo = ? WHERE id_sede = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setString(1, sede.getIndirizzo());
+            ps.setInt(2, sede.getIdSede());
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Problemi durante la modifica, " + e.getMessage());
+        }
+    }
+    //Metodo per estrarre una specifica sede
+    public Sede selectSede(Integer id){
+        Sede sede = null;
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM sedi WHERE id_sede = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setInt(1, id);
+            rec = ps.executeQuery();
+            sede = new Sede(id, rec.getString(2));
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Problemi durante la select, " + e.getMessage());
+        }
+        return sede;
+    }
     //Metodo per selezionare tutte le sedi
     public ArrayList<Sede> selectSedi(){
         ArrayList<Sede> sedi = null;
@@ -38,6 +85,55 @@ public class SqlCommand {
         } catch (Exception e) {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
+    }
+    //Metodo per la cancellazione di una categoria
+    public void cancellaCategoria(Integer id){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "DELETE FROM categorie WHERE id_categoria = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Problemi durante la cancellazione, " + e.getMessage());
+        }
+    }
+    //Metodo per la modifica di una categoria
+    public void modificaCategoria(Categoria categoria){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "UPDATE categorie SET descrizione = ?, noleggioAlGiorno = ?, noleggioAlChilometro = ? WHERE id_categoria = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setString(1, categoria.getDescrizione());
+            ps.setInt(2, categoria.getNoleggioAlGiorno());
+            ps.setInt(3, categoria.getNoleggioAlChilometro());
+            ps.setInt(4, categoria.getIdCategoria());
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Problemi durante la modifica, " + e.getMessage());
+        }
+    }
+    //Metodo per l'estrazione di una determinata categoria
+    public Categoria selectCategoria(Integer id){
+        Categoria categoria = null;
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM categorie WHERE id_categoria = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setInt(1, id);
+            rec = ps.executeQuery();
+            categoria = new Categoria(id, rec.getString(2), rec.getInt(3), rec.getInt(4));
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            System.out.println("Problemi durante la select, " + e.getMessage());
+        }
+        return categoria;
     }
     //Metodo per l'estrazione delle categorie
     public ArrayList<Categoria> selectCategorieComboBox(){

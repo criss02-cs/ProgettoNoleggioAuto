@@ -67,6 +67,11 @@ public class FrameCategorie extends javax.swing.JFrame {
                 "ID_Categoria", "Descrizione", "Noleggio al giorno", "Noleggio al km"
             }
         ));
+        tblCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCategoriaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCategoria);
 
         btnIndietro.setText("Torna indietro");
@@ -206,6 +211,14 @@ public class FrameCategorie extends javax.swing.JFrame {
         fm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void tblCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriaMouseClicked
+        int riga = tblCategoria.getSelectedRow();
+        Integer id = Integer.parseInt(tblCategoria.getValueAt(riga, 0).toString());
+        FrameDettaglioCategorie fdc = new FrameDettaglioCategorie(id);
+        fdc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tblCategoriaMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
