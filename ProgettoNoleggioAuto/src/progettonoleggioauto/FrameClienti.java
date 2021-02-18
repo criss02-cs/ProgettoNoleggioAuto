@@ -84,6 +84,11 @@ public class FrameClienti extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblClienti.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientiMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblClienti);
 
         btnIndietro.setText("Torna indietro");
@@ -242,6 +247,14 @@ public class FrameClienti extends javax.swing.JFrame {
         fm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void tblClientiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientiMouseClicked
+        int riga = tblClienti.getSelectedRow();
+        Integer id = Integer.parseInt(tblClienti.getValueAt(riga, 0).toString());
+        FrameDettaglioClienti fdc = new FrameDettaglioClienti(id);
+        fdc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tblClientiMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

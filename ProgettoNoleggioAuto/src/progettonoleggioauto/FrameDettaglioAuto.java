@@ -1,22 +1,36 @@
 package progettonoleggioauto;
 
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import model.Auto;
 import model.Categoria;
 
-public class FrameDettaglioCategorie extends javax.swing.JFrame {
-    private Integer id;
+public class FrameDettaglioAuto extends javax.swing.JFrame {
+    private String targa;
     private SqlCommand sql;
-    private Categoria categoria;
-    public FrameDettaglioCategorie(Integer id) {
+    private Auto auto;
+    public FrameDettaglioAuto(String targa) {
         initComponents();
-        this.id = id;
+        this.targa = targa;
         sql = new SqlCommand();
-        categoria = sql.selectCategoria(id);
-        this.setTitle("Dettaglio categoria");
-        txtIdCategoria.setText(categoria.getIdCategoria().toString());
-        txtDescrizione.setText(categoria.getDescrizione());
-        spnNoleggioGiorno.setValue(categoria.getNoleggioAlGiorno());
-        spnNoleggioKm.setValue(categoria.getNoleggioAlChilometro());
+        auto = sql.selectAuto(targa);
+        txtMarca.setText(auto.getMarca());
+        txtTarga.setText(auto.getTarga());
+        txtModello.setText(auto.getModello());
+        caricaComboBox();
+        for(int i = 0; i < cmbCategoria.getItemCount(); i++){
+            if(cmbCategoria.getItemAt(i).contains(auto.getFkIdCategoria().toString()))
+                cmbCategoria.setSelectedIndex(i);
+        }
+    }
+    private void caricaComboBox(){
+        sql = new SqlCommand();
+        cmbCategoria.removeAllItems();
+        ArrayList<Categoria> categorie;
+        categorie = sql.selectCategorieComboBox();
+        for (Categoria categoria : categorie) {
+            cmbCategoria.addItem(categoria.getIdCategoria() + "-" + categoria.getDescrizione());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -24,28 +38,28 @@ public class FrameDettaglioCategorie extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        txtTarga = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        txtMarca = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        txtModello = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtIdCategoria = new javax.swing.JTextField();
-        txtDescrizione = new javax.swing.JTextField();
-        spnNoleggioGiorno = new javax.swing.JSpinner();
-        spnNoleggioKm = new javax.swing.JSpinner();
+        cmbCategoria = new javax.swing.JComboBox<>();
         btnModifica = new javax.swing.JButton();
         btnCancella = new javax.swing.JButton();
         btnIndietro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Id Categoria");
+        jLabel1.setText("Targa");
 
-        jLabel2.setText("Descrizione");
+        txtTarga.setEnabled(false);
 
-        jLabel3.setText("Noleggio al giorno");
+        jLabel2.setText("Marca");
 
-        jLabel4.setText("Noleggio al chilometro");
+        jLabel3.setText("Modello");
 
-        txtIdCategoria.setEnabled(false);
+        jLabel4.setText("Categoria");
 
         btnModifica.setText("Modifica");
         btnModifica.addActionListener(new java.awt.event.ActionListener() {
@@ -81,19 +95,20 @@ public class FrameDettaglioCategorie extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(spnNoleggioKm, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                            .addComponent(spnNoleggioGiorno)
-                            .addComponent(txtDescrizione)
-                            .addComponent(txtIdCategoria)))
+                        .addGap(97, 97, 97)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMarca)
+                            .addComponent(txtTarga, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtModello, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnModifica)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnCancella)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIndietro)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnIndietro)
+                        .addGap(0, 10, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,19 +116,19 @@ public class FrameDettaglioCategorie extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtIdCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtDescrizione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(spnNoleggioGiorno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtModello, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(spnNoleggioKm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModifica)
@@ -127,39 +142,42 @@ public class FrameDettaglioCategorie extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIndietroActionPerformed
-        FrameCategorie fc = new FrameCategorie();
-        fc.setVisible(true);
+        FrameAuto fa = new FrameAuto();
+        fa.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnIndietroActionPerformed
 
+    private void btnModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaActionPerformed
+        StringTokenizer st = new StringTokenizer(cmbCategoria.getSelectedItem().toString(), "-");
+        Integer categoria = Integer.parseInt(st.nextToken());
+        auto.setMarca(txtMarca.getText());
+        auto.setModello(txtModello.getText());
+        auto.setFkIdCategoria(categoria);
+        sql.modificaAuto(auto);
+        FrameAuto fa = new FrameAuto();
+        fa.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnModificaActionPerformed
+
     private void btnCancellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancellaActionPerformed
-        sql.cancellaCategoria(id);
-        FrameCategorie fc = new FrameCategorie();
-        fc.setVisible(true);
+        sql.cancellaAuto(targa);
+        FrameAuto fa = new FrameAuto();
+        fa.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancellaActionPerformed
 
-    private void btnModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaActionPerformed
-        categoria.setDescrizione(txtDescrizione.getText());
-        categoria.setNoleggioAlChilometro(Integer.parseInt(spnNoleggioKm.getValue().toString()));
-        categoria.setNoleggioAlGiorno(Integer.parseInt(spnNoleggioGiorno.getValue().toString()));
-        sql.modificaCategoria(categoria);
-        FrameCategorie fc = new FrameCategorie();
-        fc.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnModificaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancella;
     private javax.swing.JButton btnIndietro;
     private javax.swing.JButton btnModifica;
+    private javax.swing.JComboBox<String> cmbCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JSpinner spnNoleggioGiorno;
-    private javax.swing.JSpinner spnNoleggioKm;
-    private javax.swing.JTextField txtDescrizione;
-    private javax.swing.JTextField txtIdCategoria;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtModello;
+    private javax.swing.JTextField txtTarga;
     // End of variables declaration//GEN-END:variables
 }

@@ -89,6 +89,11 @@ public class FrameAuto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblAuto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAutoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblAuto);
 
         btnIndietro.setText("Torna indietro");
@@ -244,6 +249,14 @@ public class FrameAuto extends javax.swing.JFrame {
         fm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void tblAutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutoMouseClicked
+        int riga = tblAuto.getSelectedRow();
+        String targa = tblAuto.getValueAt(riga, 0).toString();
+        FrameDettaglioAuto fda = new FrameDettaglioAuto(targa);
+        fda.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tblAutoMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

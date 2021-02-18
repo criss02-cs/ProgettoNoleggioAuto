@@ -1,6 +1,7 @@
 package progettonoleggioauto;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import model.*;
 public class SqlCommand {
     Connection c = null;
@@ -15,8 +16,9 @@ public class SqlCommand {
             ps.executeUpdate();
             ps.close();
             c.close();
+            JOptionPane.showMessageDialog(null, "Cancellazione avvenuta con successo!");
         } catch (SQLException e) {
-            System.out.println("Problemi durante la cancellazione, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la cancellazione, " + e.getMessage());
         }
     }
     //Metodo per modificare una sede
@@ -30,8 +32,9 @@ public class SqlCommand {
             ps.executeUpdate();
             ps.close();
             c.close();
+            JOptionPane.showMessageDialog(null, "Modifica avvenuta con successo!");
         } catch (SQLException e) {
-            System.out.println("Problemi durante la modifica, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la modifica, " + e.getMessage());
         }
     }
     //Metodo per estrarre una specifica sede
@@ -48,7 +51,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
         }
         return sede;
     }
@@ -68,7 +71,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
         }
         return sedi;
     }
@@ -83,7 +86,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (Exception e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
         }
     }
     //Metodo per la cancellazione di una categoria
@@ -96,8 +99,9 @@ public class SqlCommand {
             ps.executeUpdate();
             ps.close();
             c.close();
+            JOptionPane.showMessageDialog(null, "Cancellazione effettuata");
         } catch (SQLException e) {
-            System.out.println("Problemi durante la cancellazione, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la cancellazione, " + e.getMessage());
         }
     }
     //Metodo per la modifica di una categoria
@@ -113,8 +117,9 @@ public class SqlCommand {
             ps.executeUpdate();
             ps.close();
             c.close();
+            JOptionPane.showMessageDialog(null, "Modifica effettuata");
         } catch (SQLException e) {
-            System.out.println("Problemi durante la modifica, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la modifica, " + e.getMessage());
         }
     }
     //Metodo per l'estrazione di una determinata categoria
@@ -131,7 +136,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
         }
         return categoria;
     }
@@ -151,7 +156,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
         }
         return categorie;
     }
@@ -171,7 +176,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
         }
         return categorie;
     }
@@ -188,8 +193,59 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (Exception e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
         }
+    }
+    //Metodo per cancellare una auto
+    public void cancellaAuto(String targa){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "DELETE FROM auto WHERE targa = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setString(1, targa);
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+            JOptionPane.showMessageDialog(null, "Cancellazione effettuata");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Problemi durante la cancellazione, " + e.getMessage());
+        }
+    }
+    //Metodo per la modifica di una auto
+    public void modificaAuto(Auto auto){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "UPDATE auto SET marca = ?, modello = ?, fk_id_categoria = ? WHERE targa = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setString(1, auto.getMarca());
+            ps.setString(2, auto.getModello());
+            ps.setInt(3, auto.getFkIdCategoria());
+            ps.setString(4, auto.getTarga());
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+            JOptionPane.showMessageDialog(null, "Modifica effettuata");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Problemi durante la modifica, " + e.getMessage());
+        }
+    }
+    //Metodo per l'estrazione di una auto
+    public Auto selectAuto(String targa){
+        Auto auto = null;
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM auto WHERE targa = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setString(1, targa);
+            rec = ps.executeQuery();
+            auto = new Auto(targa, rec.getString(2), rec.getString(3), rec.getInt(4));
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
+        }
+        return auto;
     }
     //Metodo per l'estrazione delle auto
     public ArrayList<Auto> selectAuto(){
@@ -208,7 +264,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
         }
         return auto;
     }
@@ -226,8 +282,61 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (Exception e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
         }
+    }
+    //Metodo per eliminare un cliente
+    public void cancellaCliente(Integer id){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "DELETE FROM clienti WHERE id_clienti = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+            JOptionPane.showMessageDialog(null, "Cancellazione effettuata");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Problemi durante la cancellazione, " + e.getMessage());
+        }
+    }
+    //Metodo per modificare un cliente
+    public void modificaCliente(Cliente cliente){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "UPDATE clienti SET nome = ?, cognome = ?, noleggioAlChilometro = ?, dataN = ?, nPatente = ? WHERE id_clienti = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getCognome());
+            ps.setInt(3, cliente.getNoleggioAlKm());
+            ps.setDate(4, cliente.getDataN());
+            ps.setInt(5, cliente.getnPatente());
+            ps.setInt(6, cliente.getIdCliente());
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+            JOptionPane.showMessageDialog(null, "Modifica avvenuta con successo");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Problemi durante la modifica, " + e.getMessage());
+        }
+    }
+    //Metodo per selezionare un cliente
+    public Cliente selectCliente(Integer id){
+        Cliente cliente = null;
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM clienti where id_clienti = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setInt(1, id);
+            rec = ps.executeQuery();
+            cliente = new Cliente(rec.getInt(1), rec.getString(2), rec.getString(3), rec.getInt(4), rec.getDate(5), rec.getInt(6));
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
+        }
+        return cliente;
     }
     //Metodo per selezionare tutti i clienti
     public ArrayList<Cliente> selectClienti(){
@@ -245,7 +354,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            System.out.println("Problemi durante la select, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
         }
         return clienti;
     }
@@ -264,7 +373,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (Exception e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
         }
     }
 }

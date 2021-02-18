@@ -115,7 +115,6 @@ public class FrameDettaglioSedi extends javax.swing.JFrame {
     private void btnModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificaActionPerformed
         sede.setIndirizzo(txtIndirizzo.getText());
         sql.modificaSede(sede);
-        JOptionPane.showMessageDialog(null, "Modifica avvenuta con successo!");
         FrameSede fc = new FrameSede();
         fc.setVisible(true);
         this.dispose();
@@ -123,7 +122,6 @@ public class FrameDettaglioSedi extends javax.swing.JFrame {
 
     private void btnCancellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancellaActionPerformed
         sql.cancellaSede(id);
-        JOptionPane.showMessageDialog(null, "Cancellazione avvenuta con successo!");
         FrameSede fc = new FrameSede();
         fc.setVisible(true);
         this.dispose();
