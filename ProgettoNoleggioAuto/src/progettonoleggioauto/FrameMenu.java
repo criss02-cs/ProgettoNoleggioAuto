@@ -7,6 +7,7 @@ public class FrameMenu extends javax.swing.JFrame {
     public FrameMenu() {
         initComponents();
         this.setTitle("Menù Gestionale noleggi auto");
+        btnNoleggio.setToolTipText("Aprirà un menù per la visualizzazione e l'inserimento dei noleggi.");
         btnAuto.setToolTipText("Aprirà un menù per la visualizzazione e l'inserimento delle auto.");
         btnSedi.setToolTipText("Aprirà un menù per la visualizzazione e l'inserimento delle sedi.");
         btnCategoria.setToolTipText("Aprirà un menù per la visualizzazione e l'inserimento delle categorie.");
@@ -153,7 +154,9 @@ public class FrameMenu extends javax.swing.JFrame {
             fn.setSize(395, 305);
             this.dispose();
         } else if (conferma == 1){
-            //frame visualizza noleggio
+            FrameNoleggi fn = new FrameNoleggi();
+            fn.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_btnNoleggioActionPerformed
 

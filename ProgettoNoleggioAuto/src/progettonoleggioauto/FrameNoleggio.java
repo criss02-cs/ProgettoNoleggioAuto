@@ -48,7 +48,9 @@ public class FrameNoleggio extends javax.swing.JFrame {
     }
     private void cambiaForm(){
         if(JOptionPane.showConfirmDialog(null, "Vuoi vedere tutti i noleggi?", "Conferma", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            //Apri form noleggi
+            FrameNoleggi fn = new FrameNoleggi();
+            fn.setVisible(true);
+            this.dispose();
         }
         else{
             FrameMenu fm = new FrameMenu();
@@ -307,6 +309,7 @@ public class FrameNoleggio extends javax.swing.JFrame {
         //Converto la data da stringa a oggetto sql.Date
         java.sql.Date dN = java.sql.Date.valueOf(dataNascita);
         sql.inserisciClienti(nome, cognome, dN, nPatente);
+        
         String auto = cmbAuto.getSelectedItem().toString();
         String dataInizio = new SimpleDateFormat("yyyy-MM-dd").format(jdcDataInizio.getDate());
         String dataFine = new SimpleDateFormat("yyyy-MM-dd").format(jdcDataFine.getDate());

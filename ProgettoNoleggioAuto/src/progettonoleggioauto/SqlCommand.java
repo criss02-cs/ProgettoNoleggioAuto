@@ -6,6 +6,26 @@ import model.*;
 public class SqlCommand {
     Connection c = null;
     ResultSet rec;
+    //Metodo per selezionare tutti i noleggi
+    public ArrayList<Noleggio> selectNoleggi(){
+        ArrayList<Noleggio> noleggi = null;
+        try {
+            noleggi = new ArrayList<>();
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM noleggi";
+            PreparedStatement ps = c.prepareStatement(select);
+            rec = ps.executeQuery();
+            while(rec.next()){
+                noleggi.add(new Noleggio(rec.getInt(1), rec.getDate(5), rec.getDate(4), rec.getInt(6), rec.getInt(7), rec.getInt(8), rec.getString(9)));
+            }
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Problemi durante la select dei noleggi, " + e.getMessage());
+        }
+        return noleggi;
+    }
     //Metodo per inserire un noleggio
     public void inserisciNoleggio(Noleggio n){
         try {
@@ -266,7 +286,7 @@ public class SqlCommand {
             ps.close();
             c.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Problemi durante la select dell'auto, " + e.getMessage());
         }
         return auto;
     }
@@ -404,12 +424,13 @@ public class SqlCommand {
     public void inserisciClienti(String nome, String cognome, Date dataNascita, Integer nPatente){
         try {
             c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String insert = "INSERT INTO clienti (nome, cognome, dataN, nPatente) values (?,?,?,?,?)";
+            String insert = "INSERT INTO clienti (nome, cognome, noleggioAlChilometro, dataN, nPatente) values (?,?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(insert);
             ps.setString(1, nome);
             ps.setString(2, cognome);
-            ps.setDate(3, dataNascita);
-            ps.setInt(4, nPatente);
+            ps.setInt(3, 0);
+            ps.setDate(4, dataNascita);
+            ps.setInt(5, nPatente);
             ps.executeUpdate();
             ps.close();
             c.close();
