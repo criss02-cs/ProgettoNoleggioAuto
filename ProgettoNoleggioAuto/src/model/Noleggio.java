@@ -4,8 +4,6 @@ import java.sql.Date;
 
 public class Noleggio {
     private Integer idNoleggio;
-    private Integer kmIniziali;
-    private Integer kmFinali;
     private Date giornoRiconsegna;
     private Date giornoNoleggio;
     private Integer fkIdCliente;
@@ -13,9 +11,17 @@ public class Noleggio {
     private Integer fkIdSedeDestinazione;
     private String fkTarga;
 
-    public Noleggio(Integer idNoleggio, Integer kmIniziali, Date giornoRiconsegna, Date giornoNoleggio, Integer fkIdCliente, Integer fkIdSedePartenza, Integer fkIdSedeDestinazione, String fkTarga) {
+    public Noleggio(Integer idNoleggio, Date giornoRiconsegna, Date giornoNoleggio, Integer fkIdCliente, Integer fkIdSedePartenza, Integer fkIdSedeDestinazione, String fkTarga) {
         this.idNoleggio = idNoleggio;
-        this.kmIniziali = kmIniziali;
+        this.giornoRiconsegna = giornoRiconsegna;
+        this.giornoNoleggio = giornoNoleggio;
+        this.fkIdCliente = fkIdCliente;
+        this.fkIdSedePartenza = fkIdSedePartenza;
+        this.fkIdSedeDestinazione = fkIdSedeDestinazione;
+        this.fkTarga = fkTarga;
+    }
+
+    public Noleggio(Date giornoRiconsegna, Date giornoNoleggio, Integer fkIdCliente, Integer fkIdSedePartenza, Integer fkIdSedeDestinazione, String fkTarga) {
         this.giornoRiconsegna = giornoRiconsegna;
         this.giornoNoleggio = giornoNoleggio;
         this.fkIdCliente = fkIdCliente;
@@ -30,22 +36,6 @@ public class Noleggio {
 
     public void setIdNoleggio(Integer idNoleggio) {
         this.idNoleggio = idNoleggio;
-    }
-
-    public Integer getKmIniziali() {
-        return kmIniziali;
-    }
-
-    public void setKmIniziali(Integer kmIniziali) {
-        this.kmIniziali = kmIniziali;
-    }
-
-    public Integer getKmFinali() {
-        return kmFinali;
-    }
-
-    public void setKmFinali(Integer kmFinali) {
-        this.kmFinali = kmFinali;
     }
 
     public Date getGiornoRiconsegna() {

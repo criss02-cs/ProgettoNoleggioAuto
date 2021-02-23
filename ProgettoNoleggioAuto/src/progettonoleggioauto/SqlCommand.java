@@ -6,6 +6,27 @@ import model.*;
 public class SqlCommand {
     Connection c = null;
     ResultSet rec;
+    //Metodo per inserire un noleggio
+    public void inserisciNoleggio(Noleggio n){
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String insert = "INSERT INTO noleggi (kmIniziali, giornoRiconsegna, giornoNoleggio, fk_id_cliente, fk_id_sedePartenza, fk_id_sedeDestinazione, fk_targa) values (?,?,?,?,?,?,?)";
+            PreparedStatement ps = c.prepareStatement(insert);
+            ps.setInt(1, 0);
+            ps.setDate(2, n.getGiornoRiconsegna());
+            ps.setDate(3, n.getGiornoNoleggio());
+            ps.setInt(4, n.getFkIdCliente());
+            ps.setInt(5, n.getFkIdSedePartenza());
+            ps.setInt(6, n.getFkIdSedeDestinazione());
+            ps.setString(7, n.getFkTarga());
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+            JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
     //Metodo per cancellare una sede
     public void cancellaSede(Integer id){
         try {
@@ -85,6 +106,7 @@ public class SqlCommand {
             ps.executeUpdate();
             ps.close();
             c.close();
+            JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
         }
@@ -192,6 +214,7 @@ public class SqlCommand {
             ps.executeUpdate();
             ps.close();
             c.close();
+            JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
         }
@@ -281,6 +304,7 @@ public class SqlCommand {
             ps.executeUpdate();
             ps.close();
             c.close();
+            JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
         }
@@ -321,6 +345,24 @@ public class SqlCommand {
         }
     }
     //Metodo per selezionare un cliente
+    public Cliente selectCliente(String nome){
+        Cliente cliente = null;
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
+            String select = "SELECT * FROM clienti where nome = ?";
+            PreparedStatement ps = c.prepareStatement(select);
+            ps.setString(1, nome);
+            rec = ps.executeQuery();
+            cliente = new Cliente(rec.getInt(1), rec.getString(2), rec.getString(3), rec.getInt(4), rec.getDate(5), rec.getInt(6));
+            rec.close();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Problemi durante la select, " + e.getMessage());
+        }
+        return cliente;
+    }
+    //Metodo per selezionare un cliente
     public Cliente selectCliente(Integer id){
         Cliente cliente = null;
         try {
@@ -359,19 +401,19 @@ public class SqlCommand {
         return clienti;
     }
     //Metodo per inserire un nuovo cliente
-    public void inserisciClienti(String nome, String cognome, Integer noleggio, Date dataNascita, Integer nPatente){
+    public void inserisciClienti(String nome, String cognome, Date dataNascita, Integer nPatente){
         try {
             c = DriverManager.getConnection("jdbc:sqlite:./noleggioauto.db");
-            String insert = "INSERT INTO clienti (nome, cognome, noleggioAlChilometro, dataN, nPatente) values (?,?,?,?,?)";
+            String insert = "INSERT INTO clienti (nome, cognome, dataN, nPatente) values (?,?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(insert);
             ps.setString(1, nome);
             ps.setString(2, cognome);
-            ps.setInt(3, noleggio);
-            ps.setDate(4, dataNascita);
-            ps.setInt(5, nPatente);
+            ps.setDate(3, dataNascita);
+            ps.setInt(4, nPatente);
             ps.executeUpdate();
             ps.close();
             c.close();
+            JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage());
         }

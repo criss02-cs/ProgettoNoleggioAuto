@@ -195,7 +195,7 @@ public class FrameSede extends javax.swing.JFrame {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         FrameMenu fm = new FrameMenu();
         fm.setVisible(true);
-        this.dispose();        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void tblSediMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSediMouseClicked
